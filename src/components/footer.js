@@ -5,28 +5,59 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-<footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-  <p className="text-xs text-muted-foreground">
-    &copy; 2024 Developia AS. Alle rettigheter reservert.
-  </p>
-  <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-    <Link
-      href="#"
-      className="text-xs hover:underline underline-offset-4"
-      prefetch={false}
+    <footer
+      className="footer"
+      style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
     >
-      Brukervilkår
-    </Link>
-    <Link
-      href="#"
-      className="text-xs hover:underline underline-offset-4"
-      prefetch={false}
-    >
-      Personvern
-    </Link>
-  </nav>
-</footer>
-
+      <div className="footer-content content-1170 center-relative">
+        <ul className="copyright-holder">
+          <li
+            className="social-footer"
+            style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+          >
+            {/* <Link href="https://twitter.com/">Twitter</Link> */}
+            <Link
+              style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+              href="https://www.facebook.com/paolla.dasilva.1"
+            >
+              Facebook
+            </Link>
+            <Link
+              style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+              href="https://www.instagram.com/silvalot/"
+            >
+              Instagram
+            </Link>
+            <Link
+              style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+              href="https://www.tiktok.com/@silvalot"
+            >
+              Tiktok
+            </Link>
+            <Link
+              style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+              href="https://www.snapchat.com/add/silvalot"
+            >
+              Snapchat
+            </Link>
+            {/* <Link href="https://www.behance.net/">Behance</Link> */}
+          </li>
+          <li
+            className="copyright-footer"
+            style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+          >
+            {new Date(Date.now()).getFullYear()} Designet og kodet av{" "}
+            <Link
+              style={{ color: "#000000", backgroundColor: "#FCF6F1" }}
+              href="http://sultanavtajev.com"
+            >
+              Developia AS
+            </Link>
+            .
+          </li>
+        </ul>
+      </div>
+    </footer>
   );
 }
 

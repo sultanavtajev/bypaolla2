@@ -2,8 +2,8 @@
 "use client"; // Dette er en Client Component
 
 import { usePathname } from "next/navigation";
-import Header from "@/components/header.js";
-import Footer from "@/components/footer.js";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function SanityLayout({ children }) {
   const pathname = usePathname(); // Henter gjeldende rute

@@ -1,148 +1,241 @@
 "use client";
-
-import React from 'react'
+import { useState } from "react";
 import Link from "next/link";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { AnimatePresence, motion } from "framer-motion";
 
-export default function Header () {
-    return (
-      <header className="px-4 lg:px-6 h-14 flex items-center">
-        <Link
-          href="/"
-          className="flex items-center justify-center"
-          prefetch={false}
-        >
-          <CameraIcon className="h-6 w-6" />
-          <span className="sr-only">Nexttemplate</span>
-        </Link>
-        <div className="ml-auto flex items-center gap-4 sm:gap-6">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="w-8 h-8 rounded-full sm:hidden"
-              >
-                <MenuIcon className="h-5 w-5" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                  prefetch={false}
-                >
-                  Dokumentasjon
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                  prefetch={false}
-                >
-                  Priser
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                  prefetch={false}
-                >
-                  Om oss
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className="text-sm font-medium hover:underline underline-offset-4"
-                  prefetch={false}
-                >
-                  Kontakt
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <nav className="hidden sm:flex gap-4 sm:gap-6">
-            <Link
-              href="#"
-              className="text-sm font-medium hover:underline underline-offset-4"
-              prefetch={false}
-            >
-              Dokumentasjon
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium hover:underline underline-offset-4"
-              prefetch={false}
-            >
-              Priser
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium hover:underline underline-offset-4"
-              prefetch={false}
-            >
-              Om oss
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium hover:underline underline-offset-4"
-              prefetch={false}
-            >
-              Kontakt
-            </Link>
-          </nav>
+// Images
+import logo from "../assets/images/logo.png";
+
+// Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+
+// Hooks
+import { usePathname } from "next/navigation";
+
+export default function Header() {
+  const [menuPreview, setMenuPreview] = useState(false);
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+
+  const pathname = usePathname();
+
+  const toggleSubMenu = () => {
+    setIsSubmenuOpen((prev) => !prev);
+  };
+
+  const handleMenuShow = () => {
+    setMenuPreview(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const handleCloseMenu = (e) => {
+    const target = e.target;
+    if (target) {
+      if (
+        target.parentElement?.className === "sub-menu-toggler" ||
+        target.className === "sub-menu-toggler"
+      ) {
+        return;
+      }
+    }
+    setMenuPreview(false);
+    document.body.style.overflow = "auto";
+  };
+
+  return (
+    <>
+      {/* Header */}
+      <div
+        className={
+          "header-holder center-relative relative content-1170" +
+          (menuPreview ? " down" : "")
+        }
+      >
+        <div className="header-logo">
+          <Link href="/">
+            <div>
+              <h1 className="entry-title">
+                PAOLLA AVTAJEVA
+              </h1>
+            </div>
+          </Link>
         </div>
-      </header>
-    );
-}
+        <div className="toggle-holder">
+          <div id="toggle" onClick={handleMenuShow}>
+            <div className="first-menu-line"></div>
+            <div className="second-menu-line"></div>
+            <div className="third-menu-line"></div>
+          </div>
+        </div>
+        <div className="clear"></div>
+      </div>
 
-function CameraIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-      <circle cx="12" cy="13" r="3" />
-    </svg>
-  );
-}
+      {/* Navigation */}
+      <AnimatePresence>
+        {menuPreview && (
+          <motion.div
+            key="nav-wrapper"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="menu-wraper center-relative"
+            onClick={handleCloseMenu}
+          >
+            <motion.div
+              key="nav-holder"
+              initial={{ transform: `translateY(30px)` }}
+              animate={{ transform: `translateY(0px)` }}
+              exit={{ transform: `translateY(30px)` }}
+              className="menu-holder"
+            >
+              <nav id="header-main-menu" className="big-menu">
+                {/* Nav Links */}
+                <ul className="main-menu sm sm-clean">
+                  <li>
+                    <Link
+                      href="/"
+                      className={pathname === "/" ? "current" : ""}
+                    >
+                      home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/about"
+                      className={pathname === "/about/" ? "current" : ""}
+                    >
+                      me
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/portfolio"
+                      className={pathname === "/portfolio/" ? "current" : ""}
+                    >
+                      portfolio
+                    </Link>
+                  </li>
 
-function MenuIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="4" x2="20" y1="12" y2="12" />
-      <line x1="4" x2="20" y1="6" y2="6" />
-      <line x1="4" x2="20" y1="18" y2="18" />
-    </svg>
+                  <li className="sum-menu-li">
+                    <div className="sub-menu-toggler" onClick={toggleSubMenu}>
+                      <Link
+                        href=""
+                        className={
+                          /^\/portfolio\/.+\/$/.test(pathname) ? "current" : ""
+                        }
+                      >
+                        categories
+                      </Link>
+
+                      <div className="expandable-icon">
+                        <motion.div
+                          variants={{
+                            expanded: { rotate: -180 },
+                            collapsed: { rotate: 0 },
+                          }}
+                          initial="collapsed"
+                          animate={isSubmenuOpen ? "expanded" : "collapsed"}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <FontAwesomeIcon icon={faChevronDown} />
+                        </motion.div>
+                      </div>
+                    </div>
+                    <motion.ul
+                      variants={{
+                        expanded: {
+                          height: "auto",
+                          opacity: 1,
+                        },
+                        collapsed: {
+                          height: 0,
+                          opacity: 0,
+                        },
+                      }}
+                      animate={isSubmenuOpen ? "expanded" : "collapsed"}
+                      initial="collapsed"
+                      transition={{ duration: 0.3 }}
+                      className="sub-menu"
+                      style={{
+                        overflow: "hidden",
+                      }}
+                    >
+                      <li>
+                        <Link
+                          href="/portfolio/1"
+                          className={
+                            pathname === "/portfolio/1/" ? "current" : ""
+                          }
+                        >
+                          travel
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/portfolio/2"
+                          className={
+                            pathname === "/portfolio/2/" ? "current" : ""
+                          }
+                        >
+                          beauty
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/portfolio/3"
+                          className={
+                            pathname === "/portfolio/3/" ? "current" : ""
+                          }
+                        >
+                          fashion
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/portfolio/4"
+                          className={
+                            pathname === "/portfolio/4/" ? "current" : ""
+                          }
+                        >
+                          thoughts
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/portfolio/5"
+                          className={
+                            pathname === "/portfolio/5/" ? "current" : ""
+                          }
+                        >
+                          journal
+                        </Link>
+                      </li>
+                    </motion.ul>
+                  </li>
+
+                  <li>
+                    <Link
+                      href="/gallery"
+                      className={pathname === "/gallery/" ? "current" : ""}
+                    >
+                      spalten
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      href="/contact"
+                      className={pathname === "/contact/" ? "current" : ""}
+                    >
+                      contact
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
