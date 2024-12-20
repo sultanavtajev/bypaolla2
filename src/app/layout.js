@@ -15,7 +15,6 @@ import "@fontsource/lato/900-italic.css";
 import "@fontsource/montserrat/900.css";
 
 // CSS Styles
-import "../styles/clear.css";
 import "../styles/sm-clean.css";
 import "../styles/comman.css";
 import "../styles/globals.css";

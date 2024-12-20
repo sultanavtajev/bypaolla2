@@ -37,7 +37,7 @@ const components = {
 
 // Server Component for å vise blogginnlegget basert på slug
 export default async function BlogPost({ params }) {
-  const { slug } = params;
+  const { slug } = await params;
 
   // Sanity-spørring for å hente blogginnlegget basert på slug
   const query = `*[_type == "post" && slug.current == $slug][0]{
